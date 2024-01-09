@@ -30,12 +30,12 @@ const map = [
   [1, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
+
 const mapWidth = map[0].length
 const mapHeight = map.length
 
 const colors = { 1: 'red', 2: 'green', 3: 'blue', 4: 'gray', 5: 'cyan' }
 
-// Initial conditions
 let posX = 22
 let posY = 12
 let dirX = -1
@@ -46,9 +46,11 @@ let planeY = 0.66
 const moveSpeed = 1 / 10
 const rotSpeed = Math.PI / 120
 
-const animate = () => {
+const updateCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
+}
 
+const castRays = () => {
   for (let i = 0; i < canvas.width; i++) {
     let cameraX = (2 * i) / canvas.width - 1
     let rayDirX = dirX + planeX * cameraX
@@ -87,9 +89,7 @@ const animate = () => {
       sideDistY = (mapY + 1 - posY) * deltaDistY
     }
 
-    // Perform DDA
     while (hit === 0) {
-      // Jump to next map square, either in x-direction, or in y-direction
       if (sideDistX < sideDistY) {
         sideDistX += deltaDistX
         mapX += stepX
@@ -99,7 +99,6 @@ const animate = () => {
         mapY += stepY
         side = 1
       }
-      // Check if ray has hit a wall
       cell = map[mapY][mapX]
       if (cell > 0) hit = 1
     }
@@ -110,10 +109,8 @@ const animate = () => {
       perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY
     }
 
-    // Calculate height of line to draw on screen
     let lineHeight = canvas.height / perpWallDist
 
-    // Calculate lowest and highest pixel to fill in the current stripe
     let drawStart = Math.max(0, -lineHeight / 2 + canvas.height / 2)
     let drawEnd = Math.min(
       canvas.height - 1,
@@ -121,25 +118,16 @@ const animate = () => {
     )
 
     let color = colors[cell]
-    // Give x and y sides different brightness
     if (side === 1) {
       color = 'dark' + color
     }
 
-    // Draw the pixels of the stripe as a vertical line
     ctx.fillStyle = color
     ctx.fillRect(i, drawStart, 1, drawEnd - drawStart + 1)
   }
-  requestAnimationFrame(animate)
 }
 
-animate()
-
-canvas.addEventListener('click', () => {
-  canvas.requestPointerLock()
-})
-
-document.addEventListener('keydown', e => {
+const handleKeyPress = e => {
   const moveForward = () => {
     const nextX = posX + dirX * moveSpeed
     const nextY = posY + dirY * moveSpeed
@@ -184,4 +172,18 @@ document.addEventListener('keydown', e => {
       rotate(rotSpeed)
       break
   }
+}
+
+const animate = () => {
+  updateCanvas()
+  castRays()
+  requestAnimationFrame(animate)
+}
+
+animate()
+
+canvas.addEventListener('click', () => {
+  canvas.requestPointerLock()
 })
+
+document.addEventListener('keydown', handleKeyPress)

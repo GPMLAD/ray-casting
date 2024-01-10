@@ -6,7 +6,7 @@ O objetivo geral é entender como funciona o algoritmo DDA (Digital Differential
 
 ## O que é DDA?
 
-O DDA é um algoritmo de rasterização que calcula pontos ao longo de uma linha entre dois pontos dados. No contexto de raycasting, o DDA é utilizado para traçar raios através de uma grade tridimensional, simulando a projeção de um ambiente 3D em uma tela bidimensional.
+O DDA é um algoritmo de rasterização que calcula pontos ao longo de uma linha entre dois pontos dados. No contexto de raycasting, o DDA é utilizado para traçar raios através de uma grade bidimensional, simulando a projeção de um ambiente 3D.
 
 ## Como funciona este protótipo?
 

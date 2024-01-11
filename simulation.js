@@ -38,7 +38,7 @@ const dir = { x: 1, y: 0 } // vetor unitário da direção da visão ambos tem o
 const plane = { x: 0, y: 1 } // vetor unitário da paralelo a visão ambos tem o range [-1,1]
 
 const moveSpeed = 1 / size
-const rotSpeed = Math.PI / 120
+const rotSpeed = Math.PI / 32
 
 const clearScreen = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -104,6 +104,25 @@ const changeBlock = (x, y) => {
   map[xIndex][yIndex] = map[xIndex][yIndex] === 0 ? 1 : 0
 }
 
+const rotate = rotSpeed => {
+  const oldDirX = dir.x
+  const oldDirY = dir.y
+
+  dir.x = oldDirX * Math.cos(rotSpeed) - oldDirY * Math.sin(rotSpeed)
+  dir.y = oldDirY * Math.cos(rotSpeed) + oldDirX * Math.sin(rotSpeed)
+
+  const oldPlaneX = plane.x
+  const oldPlaneY = plane.y
+
+  plane.x = oldPlaneX * Math.cos(rotSpeed) - oldPlaneY * Math.sin(rotSpeed)
+  plane.y = oldPlaneY * Math.cos(rotSpeed) + oldPlaneX * Math.sin(rotSpeed)
+}
+
+const translate = moveSpeed => {
+  player.x = player.x + dir.x * moveSpeed
+  player.y = player.y + dir.y * moveSpeed
+}
+
 const animate = () => {
   clearScreen()
   drawMap(map)
@@ -123,5 +142,21 @@ document.addEventListener('mousemove', e => {
 document.addEventListener('keydown', e => {
   if (e.key == 'z') {
     changeBlock(mousePositions.x, mousePositions.y)
+  }
+
+  if (e.key == 'a') {
+    rotate(-rotSpeed)
+  }
+
+  if (e.key == 'd') {
+    rotate(rotSpeed)
+  }
+
+  if (e.key == 'w') {
+    translate(rotSpeed)
+  }
+
+  if (e.key == 's') {
+    translate(-rotSpeed)
   }
 })

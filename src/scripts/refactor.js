@@ -103,6 +103,24 @@ class Map {
     ctx.fill()
     ctx.stroke()
   }
+
+  drawPlane(plane, dir, player, size) {
+    ctx.fillStyle = 'purple'
+    ctx.strokeStyle = 'purple'
+    ctx.lineWidth = 3
+    ctx.beginPath()
+    ctx.moveTo((player.x + dir.x) * size, (player.y + dir.y) * size)
+    ctx.lineTo(
+      (player.x + dir.x + plane.x / 2) * size,
+      (player.y + dir.y + plane.y / 2) * size
+    )
+    ctx.lineTo(
+      (player.x + dir.x - plane.x / 2) * size,
+      (player.y + dir.y - plane.y / 2) * size
+    )
+    ctx.fill()
+    ctx.stroke()
+  }
 }
 
 const player = new Player(size, 2, 2, 1, 0, 0, 0.66)
@@ -113,6 +131,7 @@ const animate = () => {
   map.drawMap()
   map.drawPlayer(player.position.x, player.position.y, player.size)
   map.drawDir(player.dir, player.position, player.size)
+  map.drawPlane(player.plane, player.dir, player.position, player.size)
 }
 
 animate()

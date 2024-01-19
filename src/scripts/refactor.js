@@ -31,7 +31,7 @@ const initialMap = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
-const size = 25
+const size = 15
 
 class Player {
   constructor(size, pX, pY, dirX, dirY, planeX, planeY) {
@@ -40,8 +40,8 @@ class Player {
     this.position = { x: pX, y: pY }
     this.dir = { x: dirX, y: dirY }
     this.plane = { x: planeX, y: planeY }
-    this.moveSpeed = 1
-    this.rotSpeed = Math.PI / 120
+    this.moveSpeed = 2 / size
+    this.rotSpeed = Math.PI / 32
   }
 
   handleKeyDown = e => {
@@ -72,6 +72,22 @@ class Player {
   translate(moveSpeed) {
     this.position.x = this.position.x + this.dir.x * moveSpeed
     this.position.y = this.position.y + this.dir.y * moveSpeed
+  }
+
+  rotate(rotSpeed) {
+    const oldDirX = this.dir.x
+    const oldDirY = this.dir.y
+
+    this.dir.x = oldDirX * Math.cos(rotSpeed) - oldDirY * Math.sin(rotSpeed)
+    this.dir.y = oldDirY * Math.cos(rotSpeed) + oldDirX * Math.sin(rotSpeed)
+
+    const oldPlaneX = this.plane.x
+    const oldPlaneY = this.plane.y
+
+    this.plane.x =
+      oldPlaneX * Math.cos(rotSpeed) - oldPlaneY * Math.sin(rotSpeed)
+    this.plane.y =
+      oldPlaneY * Math.cos(rotSpeed) + oldPlaneX * Math.sin(rotSpeed)
   }
 }
 

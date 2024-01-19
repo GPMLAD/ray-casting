@@ -1,8 +1,12 @@
 # Protótipo de Raycasting com DDA
 
-Este protótipo foi desenvolvido com base no [Lode's Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html), uma excelente fonte para aprender sobre raycasting, algoritmos gráficos e técnicas relacionadas. O tutorial de Lode forneceu a inspiração e a orientação para implementar os conceitos abordados neste projeto.
+Este protótipo foi desenvolvido com base no [Lode's Computer Graphics Tutorial](https://lodev.org/cgtutor/raycasting.html), uma excelente fonte para aprender sobre raycasting, algoritmos gráficos e técnicas relacionadas. O tutorial de Lode foi a minha inspiração e orientação para implementar os conceitos abordados neste projeto.
 
 O objetivo geral é entender como funciona o algoritmo DDA (Digital Differential Analyzer) em um contexto de raycasting. O DDA é uma técnica que foi amplamente utilizada em jogos antigos, como Wolfenstein 3D e Catacomb 3D, para criar efeitos de pseudo-3D em ambientes bidimensionais.
+
+![alt text for screen readers](./src/assets/imgs/minimap.png "Text to show on mouseover")
+
+![alt text for screen readers](./src/assets/imgs/pov.png "Text to show on mouseover")
 
 ## O que é DDA?
 
@@ -14,7 +18,7 @@ Este protótipo utiliza HTML5 Canvas e JavaScript para criar uma simples simula�
 
 ## Como executar o protótipo?
 
-Basta abrir o arquivo index.html em um navegador web moderno. Use as setas do teclado para movimentar-se e rotacionar. Clique na tela para ativar o controle do mouse.
+Basta abrir o arquivo index.html em um navegador web. Use as setas do teclado para movimentar-se e rotacionar. Clique na tela para travar a seta do mouse.
 
 ## Referências e Leituras Adicionais
 
@@ -22,3 +26,4 @@ Basta abrir o arquivo index.html em um navegador web moderno. Use as setas do te
 - [Lode's Computer Graphics Tutorial - Raycasting](https://lodev.org/cgtutor/raycasting.html)
 
 Este protótipo é uma ferramenta educacional para entender os conceitos básicos por trás do raycasting e do algoritmo DDA. Sinta-se à vontade para explorar, experimentar e adaptar este código conforme necessário para suas próprias aplicações.
+

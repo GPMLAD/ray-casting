@@ -43,6 +43,26 @@ class Player {
     this.moveSpeed = 1 / size
     this.rotSpeed = Math.PI / 120
   }
+
+  handleKeyDown = e => {
+    switch (e.key) {
+      case 'z':
+        map.changeBlock(this.mousePositions.x, this.mousePositions.y, this.size)
+        break
+      case 'a':
+        this.rotate(-this.rotSpeed)
+        break
+      case 'd':
+        this.rotate(this.rotSpeed)
+        break
+      case 'w':
+        this.translate(this.rotSpeed)
+        break
+      case 's':
+        this.translate(-this.rotSpeed)
+        break
+    }
+  }
 }
 
 class Map {
@@ -143,6 +163,4 @@ const animate = () => {
 
 animate()
 
-window.addEventListener('keypress', e => {
-  map.changeBlock(100, 100, player.size)
-})
+document.addEventListener('keydown', player.handleKeyDown)

@@ -40,7 +40,7 @@ class Player {
     this.position = { x: pX, y: pY }
     this.dir = { x: dirX, y: dirY }
     this.plane = { x: planeX, y: planeY }
-    this.moveSpeed = 1 / size
+    this.moveSpeed = 1
     this.rotSpeed = Math.PI / 120
   }
 
@@ -56,10 +56,10 @@ class Player {
         this.rotate(this.rotSpeed)
         break
       case 'w':
-        this.translate(this.rotSpeed)
+        this.translate(this.moveSpeed)
         break
       case 's':
-        this.translate(-this.rotSpeed)
+        this.translate(-this.moveSpeed)
         break
     }
   }
@@ -67,6 +67,11 @@ class Player {
   handleMouseMove = e => {
     this.mousePositions.x = e.clientX
     this.mousePositions.y = e.clientY
+  }
+
+  translate(moveSpeed) {
+    this.position.x = this.position.x + this.dir.x * moveSpeed
+    this.position.y = this.position.y + this.dir.y * moveSpeed
   }
 }
 

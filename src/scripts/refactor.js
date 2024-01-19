@@ -121,6 +121,12 @@ class Map {
     ctx.fill()
     ctx.stroke()
   }
+
+  changeBlock(x, y, size) {
+    const xIndex = Math.floor(x / size)
+    const yIndex = Math.floor(y / size)
+    this.content[xIndex][yIndex] = this.content[xIndex][yIndex] === 0 ? 1 : 0
+  }
 }
 
 const player = new Player(size, 2, 2, 1, 0, 0, 0.66)
@@ -132,6 +138,11 @@ const animate = () => {
   map.drawPlayer(player.position.x, player.position.y, player.size)
   map.drawDir(player.dir, player.position, player.size)
   map.drawPlane(player.plane, player.dir, player.position, player.size)
+  requestAnimationFrame(animate)
 }
 
 animate()
+
+window.addEventListener('keypress', e => {
+  map.changeBlock(100, 100, player.size)
+})

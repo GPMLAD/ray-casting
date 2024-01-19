@@ -41,7 +41,7 @@ let posY = 12
 let dirX = -1
 let dirY = 0
 let planeX = 0
-let planeY = 0.66
+let planeY = 0.66 // é no intervalo [-1,1] é o tamanho do plano que muda o valor campo de visão
 
 const moveSpeed = 1 / 10
 const rotSpeed = Math.PI / 120

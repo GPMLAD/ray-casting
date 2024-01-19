@@ -63,6 +63,11 @@ class Player {
         break
     }
   }
+
+  handleMouseMove = e => {
+    this.mousePositions.x = e.clientX
+    this.mousePositions.y = e.clientY
+  }
 }
 
 class Map {
@@ -164,3 +169,4 @@ const animate = () => {
 animate()
 
 document.addEventListener('keydown', player.handleKeyDown)
+document.addEventListener('mousemove', player.handleMouseMove)

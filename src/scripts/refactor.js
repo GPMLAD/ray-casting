@@ -80,6 +80,15 @@ class Map {
       }
     }
   }
+
+  drawPlayer(x, y, size) {
+    ctx.fillStyle = 'red'
+    ctx.strokeStyle = 'red'
+    ctx.beginPath()
+    ctx.arc(x * size, y * size, size / 4, 0, 2 * Math.PI)
+    ctx.fill()
+    ctx.stroke()
+  }
 }
 
 const player = new Player(size, 2, 2, 1, 0, 0, 0.66)
@@ -88,6 +97,7 @@ const map = new Map(initialMap, size)
 const animate = () => {
   map.clearScreen()
   map.drawMap()
+  map.drawPlayer(player.position.x, player.position.y, player.size)
 }
 
 animate()

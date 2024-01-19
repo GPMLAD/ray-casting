@@ -16,6 +16,8 @@ O DDA é um algoritmo de rasterização que calcula pontos ao longo de uma linha
 
 Este protótipo utiliza HTML5 Canvas e JavaScript para criar uma simples simulação de um ambiente 3D. O usuário pode movimentar-se pelo ambiente, rotacionar e observar as projeções dos objetos na tela. O DDA é empregado para calcular a interseção de raios lançados a partir da posição do observador.
 
+Por hora, só é possível ou navegar em primeira pessoa, ou em com a visão do mapa, e para isso deve-se trocar o arquivo index.html, chamando o script **main.js** ou **simulaiton.js**.
+
 ## Como executar o protótipo?
 
 Basta abrir o arquivo index.html em um navegador web. Use as setas do teclado para movimentar-se e rotacionar. Clique na tela para travar a seta do mouse.

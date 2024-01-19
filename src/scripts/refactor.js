@@ -89,15 +89,30 @@ class Map {
     ctx.fill()
     ctx.stroke()
   }
+
+  drawDir(dir, playerPosition, size) {
+    ctx.fillStyle = 'black'
+    ctx.strokeStyle = 'black'
+    ctx.lineWidth = 3
+    ctx.beginPath()
+    ctx.moveTo(playerPosition.x * size, playerPosition.y * size)
+    ctx.lineTo(
+      (playerPosition.x + dir.x) * size,
+      (playerPosition.y + dir.y) * size
+    )
+    ctx.fill()
+    ctx.stroke()
+  }
 }
 
 const player = new Player(size, 2, 2, 1, 0, 0, 0.66)
-const map = new Map(initialMap, size)
+const map = new Map(initialMap, player.size)
 
 const animate = () => {
   map.clearScreen()
   map.drawMap()
   map.drawPlayer(player.position.x, player.position.y, player.size)
+  map.drawDir(player.dir, player.position, player.size)
 }
 
 animate()

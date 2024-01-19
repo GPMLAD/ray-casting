@@ -187,13 +187,6 @@ const drawRays = (player, dir, plane, numberOfRays = 1) => {
     ctx.fill()
     ctx.stroke()
   }
-  /*
-  const onPlane = { x: player.x + dir.x, y: player.y + dir.y }
-
-  console.log(plane)
-  console.log('x', onPlane.x - plane.x / 2, onPlane.x, onPlane.x + plane.x / 2)
-  console.log('y', onPlane.y - plane.y / 2, onPlane.y, onPlane.y + plane.y / 2)
-  */
 }
 
 const changeBlock = (x, y) => {

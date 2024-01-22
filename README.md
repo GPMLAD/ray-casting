@@ -15,8 +15,9 @@ This prototype uses HTML5 Canvas and JavaScript to create a simple simulation of
 
 ## How to run the prototype?
 
-Simply open the index.html file in a web browser. Use the arrow keys to move and the mouse to rotate. Click on the screen to lock the mouse.
-References and Additional Readings
+Simply open the index.html file in a web browser. Use the arrow keys to move and the mouse to rotate. Click on the screen to lock the mouse. You can press **z** if your cursor is on the minimap to build/destroy walls.
+
+## References and Additional Readings
 
 - [Wikipedia - Digital Differential Analyzer](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm))
 - [Lode's Computer Graphics Tutorial - Raycasting](https://lodev.org/cgtutor/raycasting.html)
@@ -44,7 +45,7 @@ Este protótipo utiliza HTML5 Canvas e JavaScript para criar uma simples simula�
 
 ## Como executar o protótipo?
 
-Basta abrir o arquivo index.html em um navegador web. Use as setas do teclado para movimentar-se e use o mouse para rotacionar. Clique na tela para travar a o mouse.
+Basta abrir o arquivo index.html em um navegador web. Use as setas do teclado para movimentar-se e use o mouse para rotacionar. Clique na tela para travar a o mouse. Você pode usar a tecla **z** caso seu cursos esteja sobre o minimapa para criar/destruir paredes.
 
 ## Referências e Leituras Adicionais
 

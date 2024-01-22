@@ -31,7 +31,7 @@ const initialMap = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
-const size = 25
+const size = 10
 const cellSize = 64
 
 class Map {
@@ -100,16 +100,18 @@ class Map {
   }
 
   drawRays(player, rays) {
-    ctx.strokeStyle = 'purple'
-    ctx.lineWidth = 1
+    //console.log(rays[0])
     rays.forEach(ray => {
+      ctx.strokeStyle = 'purple'
+      ctx.lineWidth = 1
       ctx.beginPath()
       ctx.moveTo(player.position.x * size, player.position.y * size)
       ctx.lineTo(
-        (player.position.x + Math.cos(ray.angle) * rayLength) * size,
-        (player.position.y + Math.sin(ray.angle) * rayLength) * size
+        (player.position.x + Math.cos(ray.angle) * ray.distance) * size,
+        (player.position.y + Math.sin(ray.angle) * ray.distance) * size
       )
       ctx.closePath()
+      ctx.stroke()
     })
   }
 }
@@ -117,29 +119,28 @@ class Map {
 class Player {
   constructor(size, px, py) {
     this.size = size
-    this.position = { x: 2.5, y: 2.5 }
+    this.position = { x: px, y: py }
     this.angle = 0
     this.speed = 0
     this.crab = 0
-    this.fov = 66
+    this.fov = toRad(66) //padrão de fov em fps
   }
 
   handleKeyDown = e => {
     switch (e.key) {
       case 'z':
-        console.log('z')
         break
       case 'a':
-        this.crab = 2 / this.size
+        this.crab = 1 / this.size
         break
       case 'd':
-        this.crab = -2 / this.size
+        this.crab = -1 / this.size
         break
       case 'w':
-        this.speed = 2 / this.size
+        this.speed = 1 / this.size
         break
       case 's':
-        this.speed = -2 / this.size
+        this.speed = -1 / this.size
         break
     }
   }
@@ -154,7 +155,7 @@ class Player {
   }
 
   handleMouseMove = e => {
-    this.angle += toRad(e.movementX)
+    this.angle += toRad(e.movementX / 10)
     if (this.angle >= 2 * Math.PI || this.angle <= -2 * Math.PI) {
       this.angle = 0
     }
@@ -178,25 +179,129 @@ class Player {
     }
   }
 
-  renderScene() {}
+  renderScene(rays, map) {
+    rays.forEach((ray, i) => {
+      const distance = fixFishEye(ray.distance, ray.angle, player.angle)
+      const wallHeight = ((1 * 5) / distance) * 177 // mudar esse valor
+      ctx.fillStyle = ray.vertical
+        ? 'dark' + map.colors[ray.color]
+        : map.colors[ray.color]
+      ctx.fillRect(i, canvas.height / 2 - wallHeight / 2, 1, wallHeight)
+      /*
+      ctx.fillStyle = 'black'
+      ctx.fillRect(
+        i,
+        canvas.height / 2 + wallHeight / 2,
+        1,
+        canvas.height / 2 - wallHeight / 2
+      )
+      ctx.fillStyle = 'cyan'
+      ctx.fillRect(i, 0, 1, canvas.height / 2 - wallHeight / 2)
+      */
+    })
+  }
 }
 
-const getVCollision = angle => {}
-const getHCollision = angle => {}
+const fixFishEye = (distance, angle, playerAngle) => {
+  const diff = angle - playerAngle
+  return distance * Math.cos(diff)
+}
+
+const outOfMapBounds = (xIndex, yIndex) => {
+  return (
+    xIndex < 0 ||
+    xIndex >= map.content[0].length ||
+    yIndex < 0 ||
+    yIndex >= map.content.length
+  )
+}
+
+const distance = (x1, y1, x2, y2) => {
+  return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
+}
+
+const getVCollision = angle => {
+  const right = Math.abs(Math.floor((angle - Math.PI / 2) / Math.PI) % 2)
+
+  const firstX = right
+    ? Math.floor(player.position.x / 1) * 1 + 1
+    : Math.floor(player.position.x / 1) * 1
+
+  const firstY =
+    player.position.y + (firstX - player.position.x) * Math.tan(angle)
+
+  const xA = right ? 1 : -1
+  const yA = xA * Math.tan(angle)
+
+  let wall
+  let nextX = firstX
+  let nextY = firstY
+  while (!wall) {
+    const cellX = right ? Math.floor(nextX / 1) : Math.floor(nextX / 1) - 1
+    const cellY = Math.floor(nextY / 1)
+
+    if (outOfMapBounds(cellX, cellY)) {
+      break
+    }
+    wall = map.content[cellX][cellY] // O ERRO ESTAVA AQUI
+    if (!wall) {
+      nextX += xA
+      nextY += yA
+    }
+  }
+  return {
+    angle,
+    distance: distance(player.position.x, player.position.y, nextX, nextY),
+    vertical: true,
+    color: wall
+  }
+}
+
+const getHCollision = angle => {
+  const up = Math.abs(Math.floor(angle / Math.PI) % 2)
+  const firstY = up
+    ? Math.floor(player.position.y / 1) * 1
+    : Math.floor(player.position.y / 1) * 1 + 1
+  const firstX =
+    player.position.x + (firstY - player.position.y) / Math.tan(angle)
+  const yA = up ? -1 : 1
+  const xA = yA / Math.tan(angle)
+
+  let wall
+  let nextX = firstX
+  let nextY = firstY
+  while (!wall) {
+    const cellX = Math.floor(nextX / 1)
+    const cellY = up ? Math.floor(nextY / 1) - 1 : Math.floor(nextY / 1)
+    if (outOfMapBounds(cellX, cellY)) {
+      break
+    }
+
+    wall = map.content[cellX][cellY]
+    if (!wall) {
+      nextX += xA
+      nextY += yA
+    }
+  }
+  return {
+    angle,
+    distance: distance(player.position.x, player.position.y, nextX, nextY),
+    vertical: false,
+    color: wall
+  }
+}
 
 const castRay = angle => {
   const vCollision = getVCollision(angle)
   const hCollision = getHCollision(angle)
-  return vCollision.distance >= hCollision.distance ? vCollision : hCollision
+  return vCollision.distance <= hCollision.distance ? vCollision : hCollision
 }
 
 const getRays = player => {
   const initialAngle = player.angle - player.fov / 2
   const numberOfRays = canvas.width
   const angleStep = player.fov / numberOfRays
-  for (let index = 0; index < array.length; index++) {
-    const element = array[index]
-  }
+
   return Array.from({ length: numberOfRays }, (_, i) => {
     const angle = initialAngle + i * angleStep
     const ray = castRay(angle)
@@ -209,15 +314,17 @@ const toRad = degree => {
 }
 
 const map = new Map(initialMap, size)
-const player = new Player(size)
+const player = new Player(size, 2.5, 2.5)
 
 const animate = () => {
   map.clearScreen()
   player.move(map)
+  const rays = getRays(player)
+  player.renderScene(rays, map)
   map.drawMap()
-  map.drawRays(player, [])
   map.drawEye(player)
   map.drawPlayer(player)
+  map.drawRays(player, rays)
   requestAnimationFrame(animate)
 }
 
@@ -226,5 +333,6 @@ animate()
 document.addEventListener('keydown', player.handleKeyDown)
 document.addEventListener('keyup', player.handleKeyUp)
 document.addEventListener('mousemove', player.handleMouseMove)
-
-// https://youtu.be/5nSFArCgCXA?t=1240
+canvas.addEventListener('click', () => {
+  canvas.requestPointerLock()
+})

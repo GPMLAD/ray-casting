@@ -51,7 +51,7 @@ class Map {
       for (let j = 0; j < row.length; j++) {
         const element = row[j]
         if (element) {
-          ctx.fillStyle = 'blue'
+          ctx.fillStyle = 'black'
           ctx.fillRect(
             i * this.size,
             j * this.size,
@@ -120,15 +120,23 @@ class Player {
   constructor(size, px, py) {
     this.size = size
     this.position = { x: px, y: py }
+    this.mouse = { x: 0, y: 0 }
     this.angle = 0
     this.speed = 0
     this.crab = 0
     this.fov = toRad(66) //padrão de fov em fps
   }
 
+  changeBlock(map) {
+    const xIndex = Math.floor(this.mouse.x / this.size)
+    const yIndex = Math.floor(this.mouse.y / this.size)
+    map.content[xIndex][yIndex] = map.content[xIndex][yIndex] === 0 ? 1 : 0
+  }
+
   handleKeyDown = e => {
     switch (e.key) {
       case 'z':
+        this.changeBlock(map)
         break
       case 'a':
         this.crab = 1 / this.size
@@ -155,6 +163,8 @@ class Player {
   }
 
   handleMouseMove = e => {
+    this.mouse.x = e.clientX
+    this.mouse.y = e.clientY
     this.angle += toRad(e.movementX / 10)
     if (this.angle >= 2 * Math.PI || this.angle <= -2 * Math.PI) {
       this.angle = 0
@@ -162,6 +172,7 @@ class Player {
   }
 
   move(map) {
+    //Adicionar a lógica para impedir que caia fora do mapa
     const xIncrement =
       Math.cos(this.angle) * this.speed +
       Math.cos(this.angle - Math.PI / 2) * this.crab
@@ -187,17 +198,16 @@ class Player {
         ? 'dark' + map.colors[ray.color]
         : map.colors[ray.color]
       ctx.fillRect(i, canvas.height / 2 - wallHeight / 2, 1, wallHeight)
-      /*
-      ctx.fillStyle = 'black'
+
+      ctx.fillStyle = 'dimgray'
       ctx.fillRect(
         i,
         canvas.height / 2 + wallHeight / 2,
         1,
         canvas.height / 2 - wallHeight / 2
       )
-      ctx.fillStyle = 'cyan'
+      ctx.fillStyle = 'white'
       ctx.fillRect(i, 0, 1, canvas.height / 2 - wallHeight / 2)
-      */
     })
   }
 }

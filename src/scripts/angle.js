@@ -130,6 +130,12 @@ class Player {
   changeBlock(map) {
     const xIndex = Math.floor(this.mouse.x / this.size)
     const yIndex = Math.floor(this.mouse.y / this.size)
+    if (
+      map.content[yIndex] == undefined ||
+      map.content[yIndex][xIndex] == undefined
+    ) {
+      return
+    }
     map.content[xIndex][yIndex] = map.content[xIndex][yIndex] === 0 ? 1 : 0
   }
 

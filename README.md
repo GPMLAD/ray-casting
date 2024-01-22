@@ -55,3 +55,5 @@ Basta abrir o arquivo index.html em um navegador web. Use as setas do teclado pa
 - [Make Your Own Raycaster Part 1 - 3DSage](https://youtu.be/gYRrGTC7GtA)
 
 Este protótipo é uma ferramenta educacional para entender os conceitos básicos por trás do raycasting e do algoritmo DDA. Sinta-se à vontade para explorar, experimentar e adaptar este código conforme necessário para suas próprias aplicações.
+
+(^u^)/

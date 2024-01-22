@@ -172,7 +172,6 @@ class Player {
   }
 
   move(map) {
-    //Adicionar a lógica para impedir que caia fora do mapa
     const xIncrement =
       Math.cos(this.angle) * this.speed +
       Math.cos(this.angle - Math.PI / 2) * this.crab
@@ -182,7 +181,12 @@ class Player {
 
     const indexY = Math.floor(this.position.x + xIncrement)
     const indexX = Math.floor(this.position.y + yIncrement)
-
+    if (
+      map.content[indexY] == undefined ||
+      map.content[indexY][indexX] == undefined
+    ) {
+      return
+    }
     const cell = map.content[indexY][indexX]
     if (!cell) {
       this.position.x += xIncrement

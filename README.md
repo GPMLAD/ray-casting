@@ -15,7 +15,7 @@ This prototype uses HTML5 Canvas and JavaScript to create a simple simulation of
 
 ## How to run the prototype?
 
-Simply open the index.html file in a web browser. Use the arrow keys to move and the mouse to rotate. Click on the screen to lock the mouse. You can press **z** if your cursor is on the minimap to build/destroy walls.
+Simply open the index.html file in a web browser or click [here](https://gpmlad.github.io/raycasting/). Use the arrow keys to move and the mouse to rotate. Click on the screen to lock the mouse. You can press **z** if your cursor is on the minimap to build/destroy walls.
 
 ## References and Additional Readings
 
@@ -45,7 +45,7 @@ Este protótipo utiliza HTML5 Canvas e JavaScript para criar uma simples simula�
 
 ## Como executar o protótipo?
 
-Basta abrir o arquivo index.html em um navegador web. Use as setas do teclado para movimentar-se e use o mouse para rotacionar. Clique na tela para travar a o mouse. Você pode usar a tecla **z** caso seu cursos esteja sobre o minimapa para criar/destruir paredes.
+Basta abrir o arquivo index.html em um navegador web ou clicar [aqui](https://gpmlad.github.io/raycasting/). Use as setas do teclado para movimentar-se e use o mouse para rotacionar. Clique na tela para travar a o mouse. Você pode usar a tecla **z** caso seu cursos esteja sobre o minimapa para criar/destruir paredes.
 
 ## Referências e Leituras Adicionais
 
